@@ -7,12 +7,10 @@ import keyboards as keyboards
 import database.requests as requests
 from aiogram.filters import Command, StateFilter
 from aiogram_dialog import StartMode, DialogManager
-from config_reader import config
 
 user_router = Router()
 
-admin_id = int(config.admin_id.get_secret_value())
-
+admin_id = 1183927308
 
 @user_router.message(F.data == "Каталог")
 @user_router.message(Command("catalog"))

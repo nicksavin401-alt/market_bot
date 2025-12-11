@@ -93,30 +93,21 @@ async def update_category_name(category_id: int, new_name: str) -> bool:
         return True
 
 
-async def update_product_name(product_id: int, new_name: str) -> bool:
+async def update_product(product_id: int, **kwargs) -> bool:
     async with async_session() as session:
         product = await session.get(Product, product_id)
 
         if not product:
             return False
 
-        product.name = new_name
+        # Устанавливаем только те поля, которые реально существуют в модели
+        for field, value in kwargs.items():
+            if hasattr(product, field):
+                setattr(product, field, value)
 
         await session.commit()
         return True
 
-
-async def update_product_price(product_id: int, new_price: str) -> bool:
-    async with async_session() as session:
-        product = await session.get(Product, product_id)
-
-        if not product:
-            return False
-
-        product.price = int(new_price)
-
-        await session.commit()
-        return True
 
 
 async def add_to_cart(product_id: int, user_id: int, quantity=int) -> bool:

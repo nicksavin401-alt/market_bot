@@ -8,12 +8,10 @@ import database.requests as requests
 from aiogram.filters import Command, CommandStart
 from aiogram_dialog import StartMode, DialogManager
 from aiogram.filters import CommandStart
-from config_reader import config
 
 admin_router = Router()
 
-admin_id = int(config.admin_id.get_secret_value())
-
+admin_id = 1183927308
 
 @admin_router.message(CommandStart())
 async def handle_start(
@@ -181,7 +179,7 @@ async def name_product(
     if message.text:
         data = await state.get_data()
         product_id = data["price_or_name"]
-        if await requests.update_product_name(product_id, message.text):
+        if await requests.update_product(product_id, name = message.text):
             await message.answer("Имя товара изменено")
         await state.clear()
     else:
@@ -198,7 +196,7 @@ async def price_product(
     if message.text and message.text.isdigit():
         data = await state.get_data()
         product_id = data["price_or_name"]
-        if await requests.update_product_price(product_id, message.text):
+        if await requests.update_product(product_id, price = message.text):
             await message.answer("Цена товара изменена")
         await state.clear()
     else:
