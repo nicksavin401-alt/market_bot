@@ -43,7 +43,11 @@ async def set_bot_commands(bot: Bot):
 
 
 async def main():
+<<<<<<< HEAD
     redis = await aioredis.from_url(redis_ip)
+=======
+    redis = await aioredis.from_url("redis://your.ip")
+>>>>>>> 1f6ee0558ad1e9355883a1c9ab26e6368fd99437
     dp = Dispatcher(
         storage=RedisStorage(redis, key_builder=DefaultKeyBuilder(with_destiny=True))
     )
